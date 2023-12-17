@@ -1,8 +1,48 @@
+import React, { Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import { Layout } from "./components/layout";
+import "./App.module.scss";
+
+const HomePage = React.lazy(() =>
+  import("./components/pages/HomePage").then(({ HomePage }) => ({
+    default: HomePage,
+  }))
+);
+const NotFoundPage = React.lazy(() =>
+  import("./components/pages/NotFoundPage").then(({ NotFoundPage }) => ({
+    default: NotFoundPage,
+  }))
+);
+const ItemPage = React.lazy(() =>
+  import("./components/pages/ItemPage").then(({ ItemPage }) => ({
+    default: ItemPage,
+  }))
+);
+
 function App() {
   return (
-      <>
-      <h1>ТЕСТОВОЕ</h1>
-      </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="" element={<HomePage />} />
+        <Route
+          path="item/:id"
+          element={
+            <Suspense fallback={<div>Идёт загрузка...</div>}>
+              <ItemPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<div>Идёт загрузка...</div>}>
+              <NotFoundPage />
+            </Suspense>
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
 
