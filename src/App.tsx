@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { Layout } from "./components/layout";
+import { MainLayout } from "./components/layouts/MainLayout";
 import "./App.module.scss";
 
 const HomePage = React.lazy(() =>
@@ -23,7 +23,7 @@ const ItemPage = React.lazy(() =>
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<MainLayout />}>
         <Route path="" element={<HomePage />} />
         <Route
           path="item/:id"
